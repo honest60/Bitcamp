@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='bit.spring4.buzbee.model.Board'>
+	<resultMap type="Board" id="boardResult">
+		<result property='b_no' column='B_NO'></result>
+		<result property='m_no' column='M_NO'></result>
+		<result property='f_no' column='F_NO'></result>
+		<result property='b_content' column='B_CONTENT'></result>
+		<result property='b_rebuz' column='B_REBUZ'></result>
+		<result property='b_like' column='B_LIKE'></result>
+		<result property='b_ref' column='B_REF'></result>
+		<result property='b_rdate' column='B_RDATE'></result>
+	</resultMap>
+	
+	<select id='pickM_no' parameterType='String' resultType='long'>
+		select DISTINCT m_no from member natural join board where M_ID=#{m_id}
+	</select>
+	<select id='selectByYourIdMember' parameterType='map' resultType='MemberAndBoard'>     
+			select * from (select ROWNUM rnum, aa.* from (select * from (
+		           select * from member natural join board where m_id=#{m_id}
+				) order by B_RDATE desc)aa) where rnum between #{startRow} and #{endRow}
+	</select>
+	<select id='selectByIdMember' parameterType='map' resultType='MemberAndBoard'>     
+			select * from (select ROWNUM rnum, aa.* from (select * from (
+		           select * from member natural join board where m_no=#{my_no}
+				) order by B_RDATE desc)aa) where rnum between #{startRow} and #{endRow}
+	</select>
+	<select id='selectById' parameterType='String' resultType='MemberAndBoard'>
+	</select>
+	<select id='selectByNo' parameterType='map' resultType='MemberAndBoard'>
+		select * from (select ROWNUM rnum, aa.* from (select * from (
+            select * from BOARD natural join (select * from MEMBER where M_NO in (select M_NO2 from FOLLOWING where M_NO=#{m_no})) 
+			union
+   			select * from BOARD natural join MEMBER where M_NO=#{m_no}
+            union
+            select * from BOARD natural join MEMBER where B_NO in (select B_NO from MENTION where M_NO=#{m_no})
+            union
+            select * from BOARD natural join MEMBER where B_NO in (select B_NO from REBUZ where M_NO=#{m_no} or M_NO in (select M_NO2 from FOLLOWING where M_NO=#{m_no}))
+		) order by B_RDATE desc)aa) where rnum between #{startRow} and #{endRow} and M_NO not in (select M_NO2 from BLOCK where M_NO=#{m_no})
+	</select>
+	<select id='selectByNoNotice' parameterType='map' resultType='MemberAndBoard'>
+		select * from (select ROWNUM rnum, aa.* from (select * from (select * from BOARD natural join MEMBER) order by B_RDATE desc)aa) where rnum between #{startRow} 
+		and #{endRow} and B_CONTENT like #{m_id} 
+		and M_NO not in (select M_NO2 from BLOCK where M_NO=#{m_no})
+	</select>
+	<select id='selectLikes' parameterType='long' resultType='MemberAndBoard'>
+		select * from MEMBER natural join BOARD where B_NO in (select B_NO from LIKES where M_NO=#{m_no}) order by B_RDATE desc
+	</select>
+	<select id='countReply' parameterType='long' resultType='long'>
+		select count(*) from MEMBER natural join BOARD where B_REF=#{b_no} 
+	</select>
+	<select id='countBuzzes' parameterType='long' resultType='long'>
+		select count(*) from BOARD where M_NO=#{m_no} 
+	</select>
+	<select id='countFollower' parameterType='long' resultType='long'>
+		select count(*) from FOLLOWER F, MEMBER M where M.M_NO=#{m_no} and M.M_NO=F.M_NO
+	</select>
+	<select id='countFollowing' parameterType='long' resultType='long'>
+		select count(*) from FOLLOWING F, MEMBER M where M.M_NO=#{m_no} and M.M_NO=F.M_NO
+	</select>
+	<select id='countLikes' parameterType='long' resultType='long'>
+		select count(*) from LIKES L, MEMBER M where M.M_NO=#{m_no} and M.M_NO=L.M_NO
+	</select>
+	<select id='maxBoardNo' parameterType='long' resultType='long'>
+		select max(B_NO) from BOARD where M_NO=#{m_no}
+	</select>
+	<select id='boardRef' parameterType='long' resultType='long'>
+		select B_REF from BOARD where B_NO=#{b_no}
+	</select>
+	<select id='followerOnline' parameterType='long' resultType='String'>
+		select M.M_ID from (select F.M_NO2 from FOLLOWER F, MEMBER M where M.M_NO=F.M_NO and M.M_NO=#{m_no}) F, MEMBER M where F.M_NO2=M.M_NO
+	</select>
+	<select id='recommend' parameterType='long' resultType='Member'>
+		select distinct * from MEMBER natural join (select M_NO2 as M_NO from FOLLOWER where M_NO in (select M_NO from FOLLOWER where M_NO=#{m_no})) where M_NO != #{m_no} and M_NO not in (select M_NO2 as M_NO from FOLLOWING where M_NO=#{m_no})
+	</select>
+	<select id='recommend_user' parameterType='long' resultType='Member'>
+		select * from MEMBER where M_NO not in (select M_NO2 from FOLLOWING where M_NO=#{m_no}) and M_NO!=#{m_no}
+	</select>
+	<select id='board_like' parameterType='long' resultType='long'>
+		select B_NO from LIKES where M_NO=#{m_no}
+	</select>
+	
+	<insert id='insert' parameterType='Board'>
+		insert into BOARD values(BOARD_SEQ.nextval, #{m_no}, #{b_content}, 0, 0, BOARD_SEQ.currval, SYSDATE)
+	</insert>
+	<insert id='insertReply' parameterType='Board'>
+		insert into BOARD values(BOARD_SEQ.nextval, #{m_no}, #{b_content}, 0, 0, #{b_ref}, SYSDATE)
+	</insert>
+	<insert id='insertMention' parameterType='map'>
+		insert into MENTION values(#{b_no}, #{m_no})
+	</insert>
+	
+	
+	<!-- for Ajax -->
+	<select id='content' parameterType='long' resultType='MemberAndBoard'>
+		select * from BOARD natural join MEMBER where B_NO=#{b_no}
+	</select>
+	<select id='contents' parameterType='long' resultType='MemberAndBoard'>
+		select * from BOARD natural join MEMBER where B_REF=#{b_ref} order by B_RDATE
+	</select>
+	<select id='isFollowing' parameterType='map' resultType='MemberAndBoard'>
+		select * from FOLLOWING where M_NO2=(select M_NO from BOARD where B_NO=#{b_no}) and M_NO=#{m_no}
+	</select>
+	
+	<insert id='insertRebuz' parameterType='map'>
+		insert into REBUZ values(#{m_no}, #{b_no}, SYSDATE)
+	</insert>
+	<insert id='insertFollowing' parameterType='map'>
+		insert into FOLLOWING values(#{m_no}, #{m_no2}, 'N')
+	</insert>
+	<insert id='insertFollower' parameterType='map'>
+		insert into FOLLOWER values(#{m_no2}, #{m_no})
+	</insert>
+	<insert id='insertFollowingRecommend' parameterType='map'>
+		insert into FOLLOWING values(#{m_no}, #{m_no2}, 'N')
+	</insert>
+	<insert id='insertFollowerRecommend' parameterType='map'>
+		insert into FOLLOWER values(#{m_no2}, #{m_no})
+	</insert>
+	<insert id='blockUser' parameterType='map'>
+		insert into BLOCK values(#{m_no}, #{m_no2})
+	</insert>
+	
+	<update id='plusRebuz' parameterType='long'>
+		update BOARD set B_REBUZ = B_REBUZ + 1 where B_NO=#{b_no}
+	</update>
+	<update id='minusRebuz' parameterType='long'>
+		update BOARD set B_REBUZ = B_REBUZ - 1 where B_NO=#{b_no}
+	</update>
+	
+	<insert id="insertLikes" parameterType='map'>
+		insert into LIKES values(#{m_no}, #{b_no})
+	</insert>
+	<insert id="deleteLikes" parameterType='map'>
+		delete from LIKES where B_NO=#{b_no} and m_no=#{m_no}
+	</insert>
+	
+	<update id='plusLikes' parameterType='long'>
+		update BOARD set B_LIKE = B_LIKE + 1 where B_NO=#{b_no}
+	</update>
+	<update id='minusLikes' parameterType='long'>
+		update BOARD set B_LIKE = B_LIKE - 1 where B_NO=#{b_no}
+	</update>
+	<update id='updateProfile' parameterType='map'>
+		update MEMBER set M_PROFILE=#{m_profile} where m_no=#{m_no}
+	</update>
+	<update id='updateHeader' parameterType='map'>
+		update MEMBER set M_HEADER=#{m_header} where m_no=#{m_no}
+	</update>
+	<update id='updateId' parameterType='map'>
+		update MEMBER set M_ID=#{m_id} where m_no=#{m_no}
+	</update>
+	<update id='updateContent' parameterType='map'>
+		update MEMBER set M_PR=#{m_content} where m_no=#{m_no}
+	</update>
+	
+	<delete id='deleteRebuz' parameterType='map'>
+		delete from REBUZ where B_NO=#{b_no} and M_NO=#{m_no}
+	</delete>
+	<delete id='deleteFollowing' parameterType='map'>
+		delete from FOLLOWING where M_NO=#{m_no} and M_NO2=#{m_no2}
+	</delete>
+	<delete id='deleteFollower' parameterType='map'>
+		delete from FOLLOWER where M_NO2=#{m_no} and M_NO=#{m_no2}
+	</delete>
+	<delete id='deleteBoard' parameterType='map'>
+		delete from BOARD where B_NO=#{b_no}
+	</delete>
+	
+
+	<!-- for FILES -->
+	<select id='selectFileByBNo' parameterType='long' resultType='String'>
+		select F_SAVENAME from BOARD_FILE natural join FILES natural join BOARD where B_NO=#{b_no} 
+	</select>
+	<select id='selectFileNoBySaveName' parameterType='String' resultType='long'>
+		select F_NO from FILES where F_SAVENAME=#{f_savename} 
+	</select>
+	<insert id='insertFile' parameterType='map'>
+		insert into FILES values(FILES_SEQ.nextval, #{f_name}, #{f_savename}, #{f_type}, #{f_size})
+	</insert>
+	<insert id='insertBoardFile' parameterType='map'>
+		insert into BOARD_FILE values(#{b_no}, #{f_no})
+	</insert>
+	<select id='selectSavenameByFNo' parameterType='long' resultType='String'>
+		select F_SAVENAME from FILES where F_NO=#{f_no} 
+	</select>
+	<select id='selectProfileByMId' parameterType='String' resultType='String'>
+		select F_SAVENAME from MEMBER natural join FILES where M_ID=#{m_id} and F_NO=M_PROFILE
+	</select>
+	
+	<!-- for TREND -->
+	<select id='selectTrend' resultType='TrendDTO'>
+		select T_WORD, T_COUNT from(select ROWNUM rnum, aa.* from (select * from TREND order by T_COUNT desc)aa) where rnum between 1 and 10
+	</select>
+	<insert id='insertTrend' parameterType='String'>
+		insert into TREND values(#{t_word}, 1)
+	</insert>
+	<update id='updateTrend' parameterType='String'>
+		update TREND set T_COUNT = T_COUNT + 1 where T_WORD=#{t_word}
+	</update>
+	
+	<!-- following  -->
+	<select id='following' parameterType='long' resultType='Member'>
+		select * from member where m_no in(select M_NO2 from following where m_no=#{m_no})
+	</select>
+	   <select id='follow' parameterType='long' resultType='Member'>
+      select * from member where m_no in(select M_NO2 from follower where m_no=#{m_no})
+   </select>
+</mapper>

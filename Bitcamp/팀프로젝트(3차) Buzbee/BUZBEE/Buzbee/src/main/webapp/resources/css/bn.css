@@ -1,0 +1,159 @@
+
+html, body { 
+	margin:0;
+	padding:0;
+	vertical-align:baseline;
+	height: 100%;
+	background-color: #fff3e6;
+}
+
+#container {
+	display: flex;
+	justify-content: default;
+	max-width:100%;
+	min-height: 100%;
+	background-color: #fff3e6;
+}
+
+div#left {
+    width: 50%;
+    display: block;
+    background-color: #fbd043;
+    opacity: 0.4;
+}
+
+
+div#right {
+    float: right;
+    width: 500px;
+    display: inline-block;
+    margin: auto;
+    padding: 18px;
+    align: center;
+    border-radius: 4px;
+    min-width: 300px;
+    background-color: #fff3e6;
+}
+
+div#right_content{
+	background-color: #fff; 
+	border: 1px solid #e6e6e6; 
+	border-radius: 1px; 
+	margin: 0 0 10px ; 
+	padding: 10px 1px ;
+	align:center;
+	text-align: center;
+	border-radius: 4px;
+}
+div#agree{
+	margin: 10px 60px;
+}
+div#right_login{
+	background-color: #fff; 
+	border: 1px solid #e6e6e6; 
+	border-radius: 1px; 
+	margin: 0 0 10px; 
+	padding: 10px 10px;
+	align:center;
+	text-align: center;
+}
+
+div#withEmail{
+	height: 3%; 
+	font-size:11pt;
+	text-align: right;
+	text-decoration:none;
+	align:right;
+	margin: 0 15px;
+	
+}
+a{
+	text-decoration:none;
+}
+
+/*login page*/
+div#login{
+    width: 500px;
+    display: block;
+    margin: auto;
+    padding: 18px;
+    color: black;
+    border-radius: 4px;
+    min-width: 300px;
+}
+
+div#login_pass{
+	margin: 10px 60px;
+}
+div#login_join{
+	background-color: #fff; 
+	border: 1px solid #e6e6e6; 
+	border-radius: 1px; 
+	margin: 0 0 10px; 
+	padding: 10px 10px;
+	align:center;
+	text-align: center;
+}
+
+/*----- end login page*/
+input{
+	width: 70%; 
+	padding: 12px 20px; 
+	margin: 8px 0; 
+	display: inline-block; 
+	border: 1px solid #ccc; 
+	border-radius: 4px; 
+	box-sizing: border-box;
+	box-shadow: 0 0 black;
+	}
+	
+button{
+	width: 70%; 
+	background-color: #fbd043; 
+	color: #838383; 
+	padding: 14px 20px; 
+	margin: 8px 0; 
+	border: 1px solid #fbd043; 
+	border-radius: 4px; 
+	cursor: pointer;
+}
+
+h2, p{
+	text-color: #999;
+	text-align: center;
+}
+
+#msg{
+	font-size:10px;
+	color:red;
+}
+
+/*----------- ������ ������Ʈ ���� */
+@media screen and ( max-width: 780px ){
+	body{
+		height: 100%;
+	}
+	#container {
+	  width: auto;
+	}
+	div#right {
+	  width: auto; 
+	  float: none; 
+	}
+	div#left {
+	  display:none;
+	}
+}
+
+img{
+   width: 23px;
+}
+
+div#left-title{
+   margin-left:270px;
+    margin-top: 26px;
+}
+span#title{
+   margin-left: 10px;
+   font-size: 1.1em;
+}

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace='bit.spring4.buzbee.model.Member'>
+	<resultMap type="Member" id="memberResult">
+		<result property='m_no' column='M_NO'></result>
+		<result property='m_id' column='M_ID'></result>
+		<result property='m_name' column='M_NAME'></result>
+		<result property='m_email' column='M_EMAIL'></result>
+		<result property='m_password' column='M_PASSWORD'></result>
+		<result property='m_profile' column='M_PROFILE'></result>
+		<result property='m_header' column='M_HEADER'></result>
+		<result property='m_delete' column='M_DELETE'></result>
+		<result property='m_rdate' column='M_RDATE'></result>
+		<result property='m_approval' column='M_APPROVAL'></result>
+		<result property='m_pr' column='M_PR'></result>
+	</resultMap>
+	
+	<select id='selectById' parameterType='String' resultType='Member'>
+		select * from MEMBER where M_ID=#{id}
+	</select>	
+	<select id='selectM_NOById' parameterType='String' resultType='long'>
+		select M_NO from MEMBER where M_ID=#{id}
+	</select>
+	<select id='selectByNo' parameterType='long' resultType='Member'>
+		select * from MEMBER where M_NO=#{m_no}
+	</select>
+	
+	<!-- 빛나 -->
+	<insert id="insertP" parameterType="Member">
+ 		insert into MEMBER values(MEMBER_SEQ.nextval, (SELECT DBMS_RANDOM.STRING('X', 10) ID FROM DUAL), #{m_name}, #{m_email, jdbcType=VARCHAR}, #{m_password}, 1, 2, 1, SYSDATE, #{m_approval},null)
+ 	</insert>
+ 
+ 	
+ 	<select id="selectEmail" parameterType='String' resultType="long">
+ 		select M_NO from MEMBER where M_EMAIL=#{m_email}
+ 	</select>
+ 	
+ 	<select id="selectId" parameterType='String' resultType="String">
+ 		select M_NO from MEMBER where M_ID = #{m_id, jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<insert id="memberAuth" parameterType='long'>
+ 		insert into AUTHORITY values (#{m_no}, '1', 'null')
+ 	</insert>
+ 	
+ 	<select id="checkEmail" parameterType="String" resultType="int">
+ 		select count(*) from member where m_email=#{m_email}
+ 	</select>
+ 	
+ 	<!--  이메일 인증  -->
+	<update id="approval_member" parameterType="member">
+		update authority set a_auth='ROLE_USER' where M_NO=(select m_no from MEMBER where m_email=#{m_email} and m_approval=#{m_approval})
+	</update>
+	
+	<!-- 비밀번호 찾기 (이메일) -->
+	<update id="update_pw" parameterType="member">
+		update MEMBER set M_PASSWORD = #{m_password} where m_id = #{m_id} and m_email = #{m_email}
+	</update>
+	
+	<!-- for Security -->
+	<select id='customLogin' parameterType='String' resultType='MemberAndAuth'>
+		select 
+			M.M_ID as username,
+			M.M_NO,
+			M.M_NAME,
+			M.M_EMAIL,
+			M.M_PASSWORD as password,
+			M.M_PROFILE,
+			M.M_HEADER,
+			M.M_DELETE,
+			M.M_RDATE,
+			M.M_APPROVAL,
+			M.M_PR,
+			A.A_ENABLED as enabled,
+			A.A_AUTH as authority			
+		from MEMBER M, AUTHORITY A where M.M_ID=#{m_id} and M.M_NO = A.M_NO
+	</select>
+	
+	<select id='customLoginEmail' parameterType='String' resultType='MemberAndAuth'>
+		select 
+			M.M_ID as username,
+			M.M_NO,
+			M.M_NAME,
+			M.M_EMAIL,
+			M.M_PASSWORD as password,
+			M.M_PROFILE,
+			M.M_HEADER,
+			M.M_DELETE,
+			M.M_RDATE,
+			M.M_APPROVAL,
+			M.M_PR,
+			A.A_ENABLED as enabled,
+			A.A_AUTH as authority			
+		from MEMBER M, AUTHORITY A where M.M_EMAIL=#{m_email} and M.M_NO = A.M_NO
+	</select>
+	
+	<select id='checkId' parameterType='String' resultType='Member'>
+		select * from MEMBER where M_ID=#{m_id}
+	</select>
+	
+	<!-- 참 -->
+	<select id='selectSearchUser' parameterType='map' resultType='Member'>
+		select * from member where m_name like '%' || #{search} || '%'
+	</select>
+	
+	<!-- append -->
+</mapper>

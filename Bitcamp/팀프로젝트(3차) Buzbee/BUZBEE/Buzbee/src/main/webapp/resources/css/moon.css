@@ -1,0 +1,189 @@
+*{text-align:left;color:#404040}
+
+section{z-index:2}
+a{color:#b3b3b3}
+textarea{resize:none;}
+body.modal-open {overflow:scroll;min-width:1320px}
+
+.media-body{padding-top:2px;overflow:visible}
+.media-heading{font-weight:bold;}
+.panel-heading{padding-bottom:0}
+.media-body>p{width:100%}
+.layer{position:absolute;top:0;left:0;width:100%;height:100%;text-align:center}
+.layer .content{display:inline-block;vertical-align:middle;}
+.layer .blank{display:inline-block;width:0;height:100%;vertical-align:middle}
+.nav-item{margin-right:20px}
+.nav-item:hover{border-bottom:2px solid black;margin-bottom:2px;height:49px}
+.lists:hover{background:GhostWhite;}
+.label.label-theme.pull-right.mail-info{margin:0;font-size:1.4rem;padding:6px}
+.glyphicon{margin:0}
+.modal-header{padding:10px}
+.foo{width:120px;height:120px;border-radius: 15px;}
+.videoOne{margin:auto;background-color:black;max-height:500px;width:97%;height:auto;border-radius:15px;margin-right:2px;margin-bottom:5px}
+.imgOne{width:97%;height:auto;border-radius:15px;margin-right:2px;margin-bottom:2px;overflow:hidden}
+.imgList{width:310px;height:auto;border-radius:15px;margin-right:2px;margin-bottom:2px;overflow:hidden}
+.modal-content{z-index:1050}
+.index-up{z-index:1051}
+.content-profile{width:64px;height:64px}
+.content-modal-id{font-size:1.6rem}
+.img-area-main{border-radius:10px}
+.font-bug{margin-left:-1px}
+.media.lists.new>div>div>div>a>i{margin-right:7px}
+.board-date{font-size:1.3rem;color:#b3b3b3}
+.media-object.img-circle.recommend{width:45px;height:45px}
+.layer>p{margin-bottom:0}
+.midBtn{border:0;outline:0;background-color:transparent;text-align:center;font-size:1.7rem;font-weight:bold;margin-top:-10px;margin-bottom:10px}
+.midBtn:hover{border-bottom:2px solid black;margin-bottom:-2px}
+.midBtn:focus{outline:0}
+.nomargin{margin-top:0 !important}
+.profile-content{margin-top:-59px}
+.twitter-small-avatar{margin-left:-30px}
+.twitter-footer{width:700px;margin:auto;border-radius:0}
+.fa{color:gray}
+.to-whom{background-color:#fff3e6;text-align:center;width:700px;margin:auto;font-size:1.6rem;padding:5px}
+.twitter-card:hover{background:GhostWhite;}
+.panel-custom{max-width:400px}
+.modal-area{margin-top:50px;margin-bottom:50px}
+.trend-content{font-size:1.5rem;font-weight:bold}
+.trend-count{font-size:1.3rem;color:#b3b3b3}
+.profile-follow-Btn{float:right;margin-right:20px;margin-top:2px;}
+.explain{font-weight:bold;font-size:2rem;color:black;padding:5px 0 5px 0}
+.lists{margin:0;padding-top:20px;border-top:1px solid Gainsboro;z-index:1}
+
+#timeline{padding:0;font-size:1.5rem;}
+#search2{font-size:1.5rem;border-radius: 5px;}
+#content-area{width:990px;}
+#media-body{margin:0;padding:0}
+#search2{resize:none;}
+#appended{margin-top:10px;}
+#board-header{padding:0;width:1230px;margin:auto;background:#fff3e6;z-index:40;}
+#header-center{margin:auto;}
+#side-nav{padding-right:0;}
+#header-notice{padding-left:2%}
+#top-logo{padding-left:4%}
+#input-form{background:#ffe180;border-color:#ffe180}
+#content-border{border-color:#ffe180}
+#buzzing{background:#fff3e6;right:0}
+#empty-buzzing{padding:10px}
+#buz{padding:0;padding-left:10px;padding-right:10px;z-index:1}
+#newBuzzing{text-align:center;padding:10px;background:GhostWhite}
+#newBuzzing:hover{background:LightGray}
+#btn-upload{float:left}
+#file, #foo{float:left;}
+#sidebar2{border-radius:15px;margin-top:-150px;z-index:1;background:transparent;position:absolute;width:210px;height:630px;}
+#sidebar{border-radius:5px;margin-top:60px}
+#sidebar:focus{outline:0}
+#sidebar2:focus{outline:0}
+#modal-img{z-index:1051}
+#buz-img{width:37px;height:37px}
+#content-modal{padding-left:17px}
+#content-modal-name{margin-bottom:0}
+#content-modal-profile{width:40px;height:40px}
+#replyTo{float:left;font-size:1.5rem;margin-bottom:5px}
+#content-modal-text{font-size:1.5rem}
+#header-back{background-color:#fff3e6;height:50px;width:100%;float:left;position:fixed;border-bottom: 1px solid rgba(0, 0, 0, 0.15);}
+#content>div>p{margin-bottom:0}
+#middle-bar{z-index:2}
+#middle-back{height:60px;box-shadow:1px 1px 1px gray;width:100%;float:left;z-index:3;padding-left:15%}
+#middle-back>*{display:none}
+#append-content{margin-left:20px;font-size:1.5rem}
+#content-footer{background-color:#fff3e6;padding:0;padding-left:15px;padding-right:15px;display:none;max-width:700px;margin:auto;border-radius:0 0 5px 5px}
+#content-modal-btn{font-size:4rem;padding-right:10px;position:fixed;margin-left:96%;margin-right:auto;text-align:right;}
+#content-modal-btn:focus{outline:0}
+#modal-sendBtn-content{margin-bottom:10px}
+#followBtn:focus{outline:0}
+
+@media (max-width: 806px) {
+	.twitter-footer, .to-whom{width:100%;}
+}
+
+@media (max-width: 768px) {
+	.layer{width:100%;}
+	.content{width:inherit}
+	#side-nav{display:none}
+	#sidebar{display:none}
+	#modal-img{width:100%;height:100%;}
+	#board-header{padding-left:15px;}
+	#timeline{padding:0;margin-left:0}
+	#content-area{width:100%;margin-left:0}
+	#section-body{padding:0}
+	#content-modal-btn{margin-left:0}
+	.twitter-footer, .to-whom{width:100%;}
+	.imgOne, .imgList, .videoOne{width:100% !important}
+}
+
+.topnav{
+	text-align:center;
+	height:15px;
+	cursor:pointer;
+	font-weight:bold;
+}
+
+
+/*주메뉴 마우스 오버시*/
+
+.topnav:hover{
+	color:#d3d3d3;
+}
+
+
+/*주메뉴,서브메뉴 한묶음 제어*/
+
+.navi_set{
+	position: relative;
+}
+
+
+/*서브메뉴 전체영역 제어*/
+.subnav{
+	position: absolute;
+	padding-left: 0;
+	background: white;
+	display: none;
+	z-index:3;
+	overflow:visible;
+	border:1px solid #ddd;
+	border-radius:4px;
+}
+
+
+/*서브메뉴 한칸 제어*/
+
+.subnav li{
+	font-weight:normal;
+	word-spacing: -10px;
+	padding:6px;
+	width:108px;
+	border-bottom:1px solid #ddd;
+	border-top:1px solid #ddd;
+	cursor:pointer;
+	z-index:3;
+	overflow:visible;
+}
+
+
+/*서브메뉴 마우스 오버시*/
+
+.subnav li:hover{
+	background:GhostWhite;
+}
+
+.topButton {
+	max-width: 100%;
+    vertical-align: top;
+    background: url(https://rpfundingcenter.com/images/top.png);
+    background-size: 100%;
+    height: 50px;
+    width: 50px;
+    margin-left: 110px;
+    cursor: pointer;
+    float: left;
+    border: 0;
+    outline: 0;
+    padding-top: 0px;
+    margin-left: 110px;
+    bottom: 20px;
+    right: 30px;
+    position: fixed;
+}
+.topButton:focus{outline:0}

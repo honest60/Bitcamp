@@ -1,0 +1,462 @@
+sql 최종 정리본
+
+
+DROP TABLE FILES cascade constraints;
+DROP TABLE MEMBER cascade constraints;
+DROP TABLE BOARD cascade constraints;
+DROP TABLE AUTHORITY cascade constraints;
+DROP TABLE LIKES cascade constraints;
+DROP TABLE BLOCK cascade constraints;
+DROP TABLE FOLLOWING cascade constraints;
+DROP TABLE FOLLOWER cascade constraints;
+DROP TABLE BOARD_FILE cascade constraints;
+DROP TABLE MENTION cascade constraints;
+DROP TABLE TREND;
+
+DROP SEQUENCE MEMBER_SEQ;
+DROP SEQUENCE BOARD_SEQ;
+DROP SEQUENCE FILES_SEQ;
+
+CREATE SEQUENCE   MEMBER_SEQ START WITH 0 
+INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE;   
+CREATE SEQUENCE   BOARD_SEQ START WITH 0 
+INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
+CREATE SEQUENCE   FILES_SEQ START WITH 0 
+INCREMENT BY 1 MINVALUE 0 NOCACHE NOCYCLE; 
+
+/* 트렌드 */
+CREATE TABLE TREND (
+   T_WORD VARCHAR2(100) PRIMARY KEY, /* 단어 */
+   T_COUNT NUMBER(9) /* 등장횟수 */
+);
+
+/* 회원 */
+CREATE TABLE MEMBER (
+   M_NO NUMBER(11) NOT NULL, /* 회원번호 */
+   M_ID VARCHAR2(30) NOT NULL, /* 아이디 */
+   M_NAME VARCHAR2(150) NOT NULL, /* 이름 */
+   M_EMAIL VARCHAR2(30), /* 이메일 */
+   M_PASSWORD VARCHAR2(100) NOT NULL, /* 비밀번호 */
+   M_PROFILE NUMBER(15), /* 프로필사진 */
+   M_HEADER NUMBER(15), /* 헤더사진 */
+   M_RDATE DATE NOT NULL, /* 가입일 */
+   M_APPROVAL NUMBER(10) NOT NULL, /* 인증 코드 */
+   M_PR VARCHAR2(1000) /* 자기소개 */
+);
+
+CREATE UNIQUE INDEX PK_MEMBER
+   ON MEMBER (
+      M_NO ASC
+   );
+
+CREATE UNIQUE INDEX UIX_MEMBER
+   ON MEMBER (
+      M_ID ASC
+   );
+
+CREATE UNIQUE INDEX UIX_MEMBER2
+   ON MEMBER (
+      M_EMAIL ASC
+   );
+
+
+ALTER TABLE MEMBER
+   ADD
+      CONSTRAINT PK_MEMBER
+      PRIMARY KEY (
+         M_NO
+      );
+
+ALTER TABLE MEMBER
+   ADD
+      CONSTRAINT UK_MEMBER
+      UNIQUE (
+         M_ID
+      );
+
+ALTER TABLE MEMBER
+   ADD
+      CONSTRAINT UK_MEMBER2
+      UNIQUE (
+         M_EMAIL
+      );
+
+
+
+/* 파일 */
+CREATE TABLE FILES (
+   F_NO NUMBER(15) NOT NULL, /* 파일번호 */
+   F_NAME VARCHAR2(100) NOT NULL, /* 파일이름 */
+   F_SAVENAME VARCHAR2(130) NOT NULL, /* 저장이름 */
+   F_TYPE VARCHAR2(10) NOT NULL, /* 파일형식 */
+   F_SIZE NUMBER(8) NOT NULL /* 파일크기 */
+);
+
+CREATE UNIQUE INDEX PK_FILES
+   ON FILES (
+      F_NO ASC
+   );
+
+CREATE UNIQUE INDEX UIX_FILES
+   ON FILES (
+      F_SAVENAME ASC
+   );
+
+ALTER TABLE FILES
+   ADD
+      CONSTRAINT PK_FILES
+      PRIMARY KEY (
+         F_NO
+      );
+
+ALTER TABLE FILES
+   ADD
+      CONSTRAINT UK_FILES
+      UNIQUE (
+         F_SAVENAME
+      );
+
+/* 게시물 */
+CREATE TABLE BOARD (
+   B_NO NUMBER(15) NOT NULL, /* 게시물번호 */
+   M_NO NUMBER(11) NOT NULL, /* 회원번호 */
+   B_CONTENT VARCHAR2(420) NOT NULL, /* 내용 */
+   B_REBUZ NUMBER(11) NOT NULL, /* 리버징수 */
+   B_LIKE NUMBER(15) NOT NULL, /* 하트수 */
+   B_REF NUMBER(15) NOT NULL, /* 레퍼런스 */
+   B_RDATE DATE NOT NULL /* 작성일 */
+);
+
+CREATE UNIQUE INDEX PK_BOARD
+   ON BOARD (
+      B_NO ASC
+   );
+
+ALTER TABLE BOARD
+   ADD
+      CONSTRAINT PK_BOARD
+      PRIMARY KEY (
+         B_NO
+      );
+
+/* 게시파일 */
+CREATE TABLE BOARD_FILE (
+   B_NO NUMBER(15) NOT NULL, /* 게시물번호 */
+   F_NO NUMBER(15) NOT NULL /* 파일번호 */
+);
+
+CREATE UNIQUE INDEX PK_BOARD_FILE
+   ON BOARD_FILE (
+      B_NO ASC,
+      F_NO ASC
+   );
+
+ALTER TABLE BOARD_FILE
+   ADD
+      CONSTRAINT PK_BOARD_FILE
+      PRIMARY KEY (
+         B_NO,
+         F_NO
+      );
+
+/* 팔로잉 */
+CREATE TABLE FOLLOWING (
+   M_NO NUMBER(11) NOT NULL, /* 회원번호 */
+   M_NO2 NUMBER(11) NOT NULL, /* 팔로잉번호 */
+   MUTE VARCHAR2(1) /* 뮤트 */
+);
+
+CREATE UNIQUE INDEX PK_FOLLOWING
+   ON FOLLOWING (
+      M_NO ASC,
+      M_NO2 ASC
+   );
+
+ALTER TABLE FOLLOWING
+   ADD
+      CONSTRAINT PK_FOLLOWING
+      PRIMARY KEY (
+         M_NO,
+         M_NO2
+      );
+
+/* 블락 */
+CREATE TABLE BLOCK (
+   M_NO NUMBER(11) NOT NULL, /* 회원번호 */
+   M_NO2 NUMBER(11) NOT NULL /* 블락한회원 */
+);
+
+CREATE UNIQUE INDEX PK_BLOCK
+   ON BLOCK (
+      M_NO ASC,
+      M_NO2 ASC
+   );
+
+ALTER TABLE BLOCK
+   ADD
+      CONSTRAINT PK_BLOCK
+      PRIMARY KEY (
+         M_NO,
+         M_NO2
+      );
+
+/* 권한 */
+CREATE TABLE AUTHORITY (
+   M_NO NUMBER(11) NOT NULL, /* 회원번호 */
+   A_ENABLED CHAR(1) NOT NULL, /* 활성화 */
+   A_AUTH VARCHAR2(15) NOT NULL /* 권한 */
+);
+
+CREATE UNIQUE INDEX PK_AUTHORITY
+   ON AUTHORITY (
+      M_NO ASC
+   );
+
+ALTER TABLE AUTHORITY
+   ADD
+      CONSTRAINT PK_AUTHORITY
+      PRIMARY KEY (
+         M_NO
+      );
+
+/* 관심글 */
+CREATE TABLE LIKES (
+   M_NO NUMBER(11) NOT NULL, /* 회원번호 */
+   B_NO NUMBER(15) NOT NULL /* 게시물번호 */
+);
+
+CREATE UNIQUE INDEX PK_LIKES
+   ON LIKES (
+      M_NO ASC,
+      B_NO ASC
+   );
+
+ALTER TABLE LIKES
+   ADD
+      CONSTRAINT PK_LIKES
+      PRIMARY KEY (
+         M_NO,
+         B_NO
+      );
+
+/* 팔로워 */
+CREATE TABLE FOLLOWER (
+   M_NO NUMBER(11) NOT NULL, /* 회원번호 */
+   M_NO2 NUMBER(11) NOT NULL /* 팔로워번호 */
+);
+
+CREATE UNIQUE INDEX PK_FOLLOWER
+   ON FOLLOWER (
+      M_NO ASC,
+      M_NO2 ASC
+   );
+
+ALTER TABLE FOLLOWER
+   ADD
+      CONSTRAINT PK_FOLLOWER
+      PRIMARY KEY (
+         M_NO,
+         M_NO2
+      );
+
+/* 멘션 */
+CREATE TABLE MENTION (
+   B_NO NUMBER(15) NOT NULL, /* 게시물번호 */
+   M_NO NUMBER(11) NOT NULL /* 회원번호 */
+);
+
+CREATE UNIQUE INDEX PK_MENTION
+   ON MENTION (
+      B_NO ASC,
+      M_NO ASC
+   );
+
+ALTER TABLE MENTION
+   ADD
+      CONSTRAINT PK_MENTION
+      PRIMARY KEY (
+         B_NO,
+         M_NO
+      );
+
+
+
+ALTER TABLE MEMBER
+   ADD
+      CONSTRAINT FK_FILES_TO_MEMBER
+      FOREIGN KEY (
+         M_PROFILE
+      )
+      REFERENCES FILES (
+         F_NO
+      );
+
+ALTER TABLE MEMBER
+   ADD
+      CONSTRAINT FK_FILES_TO_MEMBER2
+      FOREIGN KEY (
+         M_HEADER
+      )
+      REFERENCES FILES (
+         F_NO
+      );
+
+ALTER TABLE BOARD
+   ADD
+      CONSTRAINT FK_MEMBER_TO_BOARD
+      FOREIGN KEY (
+         M_NO
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE BOARD
+   ADD
+      CONSTRAINT FK_BOARD_TO_BOARD
+      FOREIGN KEY (
+         B_REF
+      )
+      REFERENCES BOARD (
+         B_NO
+      );
+
+ALTER TABLE BOARD_FILE
+   ADD
+      CONSTRAINT FK_BOARD_TO_BOARD_FILE
+      FOREIGN KEY (
+         B_NO
+      )
+      REFERENCES BOARD (
+         B_NO
+      ) ON DELETE CASCADE;
+
+ALTER TABLE BOARD_FILE
+   ADD
+      CONSTRAINT FK_FILES_TO_BOARD_FILE
+      FOREIGN KEY (
+         F_NO
+      )
+      REFERENCES FILES (
+         F_NO
+      );
+
+ALTER TABLE FOLLOWING
+   ADD
+      CONSTRAINT FK_MEMBER_TO_FOLLOWING
+      FOREIGN KEY (
+         M_NO
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE FOLLOWING
+   ADD
+      CONSTRAINT FK_MEMBER_TO_FOLLOWING2
+      FOREIGN KEY (
+         M_NO2
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE BLOCK
+   ADD
+      CONSTRAINT FK_MEMBER_TO_BLOCK
+      FOREIGN KEY (
+         M_NO
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE BLOCK
+   ADD
+      CONSTRAINT FK_MEMBER_TO_BLOCK2
+      FOREIGN KEY (
+         M_NO2
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE AUTHORITY
+   ADD
+      CONSTRAINT FK_MEMBER_TO_AUTHORITY
+      FOREIGN KEY (
+         M_NO
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE LIKES
+   ADD
+      CONSTRAINT FK_MEMBER_TO_LIKES
+      FOREIGN KEY (
+         M_NO
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE LIKES
+   ADD
+      CONSTRAINT FK_BOARD_TO_LIKES
+      FOREIGN KEY (
+         B_NO
+      )
+      REFERENCES BOARD (
+         B_NO
+      );
+
+
+ALTER TABLE FOLLOWER
+   ADD
+      CONSTRAINT FK_MEMBER_TO_FOLLOWER
+      FOREIGN KEY (
+         M_NO
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE FOLLOWER
+   ADD
+      CONSTRAINT FK_MEMBER_TO_FOLLOWER2
+      FOREIGN KEY (
+         M_NO2
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE MENTION
+   ADD
+      CONSTRAINT FK_MEMBER_TO_MENTION
+      FOREIGN KEY (
+         M_NO
+      )
+      REFERENCES MEMBER (
+         M_NO
+      );
+
+ALTER TABLE MENTION
+   ADD
+      CONSTRAINT FK_BOARD_TO_MENTION
+      FOREIGN KEY (
+         B_NO
+      )
+      REFERENCES BOARD (
+         B_NO
+      );
+        
+        
+insert into FILES values(FILES_SEQ.nextval, 'mb.png', 'mb.png', 'png', 1);
+insert into FILES values(FILES_SEQ.nextval, 'header.jpg', 'header.jpg', 'jpg', 1);
+
+
+commit;
+
+select * from MEMBER;

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+	
+	<!-- login handler -->
+	<beans:bean id="UserLoginSuccessHandler" class="bit.spring4.buzbee.login.service.UserLoginSuccessHandler"/>
+	<beans:bean id="UserLoginFailureHandler" class="bit.spring4.buzbee.login.service.UserLoginFailureHandler"/>
+	
+	<!-- 정적 리소스 파일들 보안설정 안하기 -->
+	<http pattern="/resources/**" security="none"/>
+	<http use-expressions="true">
+		<intercept-url pattern="/m/**" access="!hasRole('ROLE_USER')" />
+		<intercept-url pattern="/board/**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/**" access="permitAll" /> 
+		
+		<!-- 로그인 처리 -->
+		<form-login 
+			login-page="/m/join"                    
+			login-processing-url="/m/login_check"             
+			authentication-success-handler-ref="UserLoginSuccessHandler"
+			authentication-failure-handler-ref = "UserLoginFailureHandler"  />
+			
+		<!-- 자동로그인 관련 쿠키 저장  86400=1일, 604800=7일-->
+		<remember-me
+			key="remember-me" token-validity-seconds="86400" />
+			
+		<!-- 로그아웃 처리 -->
+		<logout 
+			delete-cookies="JSESSIONID,SPRING_SECURITY_REMEMBER_ME_COOKIE"  
+			logout-success-url="/m/join" 
+			logout-url="/m/logout"  
+			invalidate-session="true"/> 
+			
+		
+			
+		<!--
+		<form-login 
+			login-page="/login"                    
+			default-target-url="/"            
+			username-parameter="username"         
+			password-parameter="password"          
+			authentication-failure-url="/login?error"  
+			always-use-default-target='true' /> 
+		-->
+
+		<csrf disabled="true"/>  
+	</http> 
+	
+	
+	
+ 	<!-- DB랑 시큐리티 연동 (로그인 인증을 처리 하는 빈) -->
+ 	<beans:bean id="userService" class="bit.spring4.buzbee.util.CustomUserDetailService">
+ 		<beans:constructor-arg name="sqlSession" ref="sqlSession" />
+ 	</beans:bean>
+ 	
+ 	<authentication-manager>
+ 		<authentication-provider user-service-ref="userService">
+ 		<password-encoder ref="bcryptPasswordEncoder" />
+ 		</authentication-provider>
+ 	</authentication-manager>
+ 	
+ 	<!-- 비밀번호 암호화 -->
+ 	<beans:bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+</beans:beans>
