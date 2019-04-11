@@ -1,10 +1,3 @@
-**MYSQL 수정본
-
-use buzbee; /* 데이터 베이스 선책하기 */
-show tables; /* 현재 선택된 데이터베이스 안의 테이블 목록 */
-desc test; /* test 테이블 구조를 볼 수 있음 */
-select * from MEMBER;
-
 /* 삭제 구문 */  #참고 TRUNCATE TABLE 테이블명 ---- 데이터만 삭제 됨 
 
 DROP TABLE MUTE;
