@@ -16,43 +16,44 @@ class RecDAO {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context)initContext.lookup("java:/comp/env");
-			ds = (DataSource)envContext.lookup("jdbc/myoracle");
+			ds = (DataSource)envContext.lookup("DB/itit");
 		}catch(NamingException ne) {ne.printStackTrace();}
 	}
 	
 	ArrayList<RecDTO> mycheck(String MEM_NUM, String DEGREEC) {
-		System.out.println("DAO mycheckµÈæÓø»");
+		System.out.println("DAO mycheck Ï†ëÏÜç ÏÑ±Í≥µ");
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<RecDTO> list = new ArrayList<RecDTO>();
 		String sql = "select * from CLOTHING_MATCH where DEGREEC<=?+1 and DEGREEC >=?-1 and MEM_NUM=?";
-		//¿Ã∞≈ √ﬂ¿ß¿ﬂ≈∏¥¬ªÁ∂˜ ¥ı¿ß¿ﬂ≈∏¥¬ªÁ∂˜ ¥ı ≥™¥≤æﬂµ ...
+
 		try {
 			con = ds.getConnection();
-			System.out.println("dao connection πﬁ¿Ω");
+			System.out.println("dao connection Ï†ëÏÜç ÏÑ±Í≥µ");
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, DEGREEC);
-			System.out.println("dao DEGREEC≥÷¿Ω");
+			System.out.println("dao DEGREEC1 Ï£ºÏûÖ ÏÑ±Í≥µ");
 			pstmt.setString(2, DEGREEC);
+			System.out.println("dao DEGREEC2 Ï£ºÏûÖ ÏÑ±Í≥µ");
 			pstmt.setString(3, MEM_NUM);
-			System.out.println("dao MEM_NUM ≥÷¿Ω");
+			System.out.println("dao MEM_NUM Ï£ºÏûÖ ÏÑ±Í≥µ");
 			System.out.println(pstmt);
 			rs = pstmt.executeQuery();
-			System.out.println("dao queryΩ««‡«‘");
+			System.out.println("dao query Ï†ëÏÜç ÏÑ±Í≥µ");
 			int i = 0;
 			while(rs.next()) {
 				if(i>=3) break;
-				System.out.println("dao rs next ¡∏¿Á");
+				System.out.println("dao rs next ÎÇ¥Î∂Ä ÏßÑÏûÖ");
 				String TOP = rs.getString("TOP");
-				System.out.println("dao top ∞°¡Æø» ¡∏¿Á");
+				System.out.println("dao top Ï†ëÏÜç ÏÑ±Í≥µ");
 				String BOTTOM = rs.getString("BOTTOM");
 				String TOUTER = rs.getString("TOUTER");
 				String ETC = rs.getString("ETC");
 				String FEELING = rs.getString("FEELING");
 				Date TDATE = rs.getDate("TDATE");
 				list.add(new RecDTO(TDATE, TOP, BOTTOM, TOUTER, ETC, FEELING));
-				System.out.println("dao listø° ≥÷¿Ω");
+				System.out.println("dao list Ï†ëÏÜç ÏÑ±Í≥µ");
 				i++;
 			}
 			return list;
@@ -74,7 +75,7 @@ class RecDAO {
 		ResultSet rs = null;
 		ArrayList<RecDTO> list = new ArrayList<RecDTO>();
 		String sql = "select * from CLOTHING_MATCH where DEGREEC<=?+1 and DEGREEC >=?-1 and MEM_NUM!=?";
-		//¿Ã∞≈ √ﬂ¿ß¿ﬂ≈∏¥¬ªÁ∂˜ ¥ı¿ß¿ﬂ≈∏¥¬ªÁ∂˜ ¥ı ≥™¥≤æﬂµ ...
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(sql);

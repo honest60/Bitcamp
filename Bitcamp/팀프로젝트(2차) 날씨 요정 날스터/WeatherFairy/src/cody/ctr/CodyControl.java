@@ -23,6 +23,7 @@ public class CodyControl extends HttpServlet {
 			response.sendRedirect("index.do");
 		}
 	}
+	
 	private void form(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		RequestDispatcher rd = request.getRequestDispatcher("cody.jsp");
