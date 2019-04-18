@@ -35,11 +35,8 @@
 <script>
 
 function printTime() {
-
               var clock = document.getElementById("clock");            // 출력할 장소 선택
-
               var now = new Date();                                                  // 현재시간
-
               var nowTime = (now.getMonth()+1) + "월 " + now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분";
               clock.innerHTML = nowTime;           // 현재시간을 출력
               setTimeout("printTime()",1000);         // setTimeout(“실행할함수”,시간) 시간은1초의 경우 1000
@@ -48,6 +45,10 @@ function printTime() {
 window.onload = function() {                         // 페이지가 로딩되면 실행
               printTime();
 
+}
+
+function savePhoto_view() {
+	alert("진입");
 }
 
 </script>
@@ -114,19 +115,25 @@ window.onload = function() {                         // 페이지가 로딩되�
 									  <div class="w3-panel w3-topbar w3-bottombar w3-leftbar w3-rightbar w3-border-white">
                                     <br/><div style="text-align:center">
                                         비슷한 날씨에 내가 입었던 코디</div><br/>
-        <c:if test='${!empty list}'>
-		<c:forEach var='item' items='${list}'>
-                                <small class="date">${item.getTDATE()}</small>
-                ${item.getTOP()}, ${item.getBOTTOM()}, ${item.getTOUTER()}, ${item.getETC()} ${item.getFEELING()}<button class="w3-button w3-black w3-round-xlarge">사진 보기</button>
-                                    <br/>
-                                    </c:forEach></c:if>
-                                    <br/><br/>
-                                       <br/><div style="text-align:center">
-                                        비슷한 날씨에 다른 사람이 입었던 코디</div><br/>
-        <c:if test='${!empty list2}'>
-		<c:forEach var='item2' items='${list2}'>
-                                <small class="date">${item2.getTDATE()}</small>
-                ${item2.getTOP()}, ${item2.getBOTTOM()}, ${item2.getTOUTER()}, ${item2.getETC()} ${item2.getFEELING()}
+							        <c:if test='${!empty list}'>
+									<c:forEach var='item' items='${list}'>
+							       		<small class="date">${item.getTDATE()}</small>
+							            ${item.getTOP()}, ${item.getBOTTOM()}, ${item.getTOUTER()}, 
+							            ${item.getETC()} ${item.getFEELING()}
+							            <button class="w3-button w3-black w3-round-xlarge" 
+							            onclick="savePhoto_view()">사진 보기</button>
+							           	<br/>
+							        </c:forEach>
+							        </c:if>
+							            <br/><br/><br/>
+							            <div style="text-align:center">
+							              비슷한 날씨에 다른 사람이 입었던 코디
+							            </div><br/>
+							        <c:if test='${!empty list2}'>
+									<c:forEach var='item2' items='${list2}'>
+							           <small class="date">${item2.getTDATE()}</small>
+							           ${item2.getTOP()}, ${item2.getBOTTOM()}, ${item2.getTOUTER()}, 
+							           ${item2.getETC()} ${item2.getFEELING()}
                                     <br/>
                                     </c:forEach></c:if>
                                     <br/><br/>

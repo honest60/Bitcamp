@@ -53,7 +53,7 @@ public class SavePhotoControl extends HttpServlet{
 	}	
 	
 	File f;
-	String realSaveDir = "C:\\NAA";
+	String realSaveDir = "C:\\cham\\Git\\Bitcamp\\Bitcamp\\íŒ€í”„ë¡œì íŠ¸(2ì°¨) ë‚ ì”¨ ìš”ì • ë‚ ìŠ¤í„°\\WeatherFairy\\store";
 	int maxPostSize = 1*1024*1024; 
 	String encoding = "utf-8";
 	FileRenamePolicy policy = new DefaultFileRenamePolicy();	
@@ -63,8 +63,6 @@ public class SavePhotoControl extends HttpServlet{
 		try {
 			MultipartRequest mr = new MultipartRequest (request, realSaveDir,
 					maxPostSize, encoding, policy);		
-			///////////////////// ±â¿Â, Ç³¼Ó, Æ¯¼º, ½Ã±º±¸¸í, È¸¿ø¹øÈ£ ¹Ş¾Æ¾ß ÇÔ
-			//ÇÑ¹ø¿¡ ¿©·¯°ªÀ» ¹Ş¾Æ¾ß ÇÔ
 			String top = "";
 			String bottom = "";
 			String touter = "";
@@ -117,19 +115,16 @@ public class SavePhotoControl extends HttpServlet{
 			}
 			f = new File(realSaveDir+"/"+photoName);		
 			SavePhotoMgr mgr = SavePhotoMgr.getInstance();
-			// ±â¿Â, Ç³¼Ó, Æ¯¼º, ³¯Â¥, ½Ã±º±¸¸í, È¸¿ø¹øÈ£(ÇöÀç 1¹øÀ¸·Î ÇÔ)			
-			System.out.println("ÄÁÆ®·Ñ ºÎºĞ degreeC: " + degreeC + ", wind: "+ wind + ", trait: " + trait +
+			System.out.println("degreeC: " + degreeC + ", wind: "+ wind + ", trait: " + trait +
 					", reg_name: " + reg_name+  ", top: " + top + ", bottom: " + bottom +
 					", touter: " + touter + ",etc: " + etc + ",feeling: " + feeling + 
 					",photoName: " + photoName + "////////");
 			SavePhotoDTO dto = new SavePhotoDTO(degreeC, wind, trait, null, reg_name, MEM_NUM, top,
 			bottom, touter, etc, feeling, photoName);		
 			mgr.insertM(dto);
-			System.out.println("½ÇÇà¿Ï·á");
 			response.sendRedirect("index.do");			
-			
 		}catch(IOException se) {	
-			System.out.println("¿©±â¿À·ù"+se);
+			System.out.println("[ insert() IOException ==> "+ se);
 		}					
 	}
 	

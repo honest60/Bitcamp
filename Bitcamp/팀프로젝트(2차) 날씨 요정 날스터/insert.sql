@@ -32,7 +32,7 @@ insert into REGION_LALO values( '영등포구', REGION_LALO_SEQ.NEXTVAL, 11560, 'Yeo
 insert into REGION_LALO values( '관악구', REGION_LALO_SEQ.NEXTVAL, 11620, 'Gwanak-gu', 126.9438071,  37.4653993);
 insert into REGION_LALO values( '성동구', REGION_LALO_SEQ.NEXTVAL, 11200, 'Seongdong-gu', 127.0409622,  37.5506753);
 insert into REGION_LALO values( '용산구', REGION_LALO_SEQ.NEXTVAL, 11170, 'Yongsan-gu', 126.9810742,  37.5311008);
-
+SELECT * FROM region_lalo;
 
 //옷 테이블 정보 ( 분류, 이름 )
 insert into CLOTHING values( '상의', '민소매');
@@ -84,12 +84,84 @@ insert into CLOTHING values( 'ETC', '핫팩');
 insert into CLOTHING values( 'ETC', '귀도리');
 insert into CLOTHING values( 'ETC', '털모자');
 insert into CLOTHING values( 'ETC', '수면양말');
+SELECT * FROM clothing;
+
 
 insert into FEELING_TABLE values( '딱 좋았어요' );
 insert into FEELING_TABLE values( '조금 더웠어요' );
 insert into FEELING_TABLE values( '너무 더웠어요' );
 insert into FEELING_TABLE values( '조금 추웠어요' );
 insert into FEELING_TABLE values( '너무 추웠어요' );
+SELECT * FROM feeling_table;
+
+
+/*  ===================  [  실무 insert 문   ] ===============================  */
+
+
+
+
+
+//회원 insert문
+insert into MEMBERT values(MEMBERT_SEQ.NEXTVAL,'서울 서대문구', 20, 'nnn@gmail.com', '나나', 'nana', '여', '더위를 잘 탐');
+insert into MEMBERT values(MEMBERT_SEQ.NEXTVAL,'광주 광산구', 30, 'devil@gmail.com', '구구', '9toNine', '여', '추위를 잘 탐');
+insert into MEMBERT values(MEMBERT_SEQ.NEXTVAL,'김포 장기동', 22, 'good@gmail.com', 's2나비', 'Btfly', '여', '보통');
+SELECT * FROM memberT;
+
+//나나 봄
+insert into CLOTHING_MATCH values(23, 3, '일교차 큼',TO_DATE('20180402','YYYY-MM-DD'),'서울 서대문구',1,'니트', '원피스', '가디건', '없음', '적당함',  '1_180402.jpg');
+insert into CLOTHING_MATCH values(24, 3, '따스함',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1,'맨투맨', '청바지', '가디건', '없음', '약간 더웠음',  '1_180403.jpg');
+
+//나나 여름
+insert into CLOTHING_MATCH values(31, 2, '습함',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1,'민소매', '반바지', '없음', '손풍기', '너무 더웠음', '1_180808.jpg');
+insert into CLOTHING_MATCH values(30, 3, '습함',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1, '없음', '원피스', '없음', '손풍기', '약간 더웠음', '1_180809.jpg');
+
+//나나 가을
+insert into CLOTHING_MATCH values(21, 5, '일교차 큼',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1,'맨투맨', '반바지', '청자켓', '없음', '낮에 약간 더움', '1_181011.jpg');
+insert into CLOTHING_MATCH values(20, 4, '건조함',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1,'셔츠', '슬랙스', '가디건', '없음', '낮에 약간 더움', '1_181012.jpg');
+
+//나나 겨울
+insert into CLOTHING_MATCH values(11, 1, '건조함',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1,'니트', '스키니진', '패딩', '없음', '낮에 추웠음', '1_181203.jpg');
+insert into CLOTHING_MATCH values(10, 1, '건조함',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1,'니트', '스키니진', '패딩', '없음', '낮에 추웠음', '1_181204.jpg');
+
+//구구 봄
+insert into CLOTHING_MATCH values(23, 3, '일교차 큼',TO_DATE('20180403','YYYY-MM-DD'),'광주 광산구',2,'블라우스', '청바지', '가디건', '없음', '약간 더웠음',  '2_180402.jpg');
+insert into CLOTHING_MATCH values(25, 3, '따스함',TO_DATE('20180403','YYYY-MM-DD'),'광주 광산구',2,'없음', '원피스', '자켓', '없음', '적당함',  '2_180403.jpg');
+-------------밑에부터 하기
+//구구 여름
+insert into CLOTHING_MATCH values(31, 1, '습함',TO_DATE('20180403','YYYY-MM-DD'),'광주 광산구',2,'반팔', '반바지', '없음', '손풍기', '땀이 많이 남', '2_180808.jpg');
+insert into CLOTHING_MATCH values(28, 3, '습함',TO_DATE('20180403','YYYY-MM-DD'),'광주 광산구',2, '반팔', '긴 치마', '없음', '손풍기', '비와서 괜찮았음', '2_180809.jpg');
+
+//구구 가을
+insert into CLOTHING_MATCH values(20, 3, '일교차 큼',TO_DATE('20180403','YYYY-MM-DD'),'광주 광산구',2,'니트', '슬랙스', '트렌치코트', '없음', '적당함', '2_181011.jpg');
+insert into CLOTHING_MATCH values(21, 3, '건조함',TO_DATE('20180403','YYYY-MM-DD'),'광주 광산구',2,'긴팔', '슬랙스', '가디건', '없음', '낮에 약간 더움', '2_181012.jpg');
+
+//구구 겨울
+insert into CLOTHING_MATCH values(11, 4, '바람이 세게 붊',TO_DATE('20181203','YYYY-MM-DD'),'광주 광산구',2,'니트', '니트치마', '롱패딩', '없음', '적당함', '2_181203.jpg');
+insert into CLOTHING_MATCH values(10, 1, '건조함',TO_DATE('20181204','YYYY-MM-DD'),'광주 광산구',2,'맨투맨', '트레이닝복', '숏패딩', '없음', '낮에 추웠음', '2_181204.jpg');
+
+//s2나비 봄
+insert into CLOTHING_MATCH values(21, 2, '일교차 큼',TO_DATE('20180402','YYYY-MM-DD'),'김포 장기동',3,'남방', '슬랙스', '자켓', '없음', '적당함',  '3_180402.jpg');
+insert into CLOTHING_MATCH values(22, 2, '따스함',TO_DATE('20180403','YYYY-MM-DD'),'김포 장기동',3,'긴팔, 조끼', '청바지', '가디건', '없음', '약간 더웠음',  '3_180403.jpg');
+
+//s2나비 여름
+insert into CLOTHING_MATCH values(31, 2, '습함',TO_DATE('20180808','YYYY-MM-DD'),'김포 장기동',3,'민소매', '반바지', '없음', '손풍기', '너무 더웠음', '3_180808.jpg');
+insert into CLOTHING_MATCH values(30, 3, '습함',TO_DATE('20180809','YYYY-MM-DD'),'김포 장기동',3, '반팔', '원피스', '없음', '손풍기', '괜히 겹쳐입음', '3_180809.jpg');
+
+//s2나비 가을
+insert into CLOTHING_MATCH values(21, 5, '일교차 큼',TO_DATE('20181011','YYYY-MM-DD'),'김포 장기동',3,'맨투맨', '반바지', '야상', '없음', '낮에 약간 더움', '3_181011.jpg');
+insert into CLOTHING_MATCH values(20, 4, '건조함',TO_DATE('20181012','YYYY-MM-DD'),'김포 장기동',3,'셔츠', '슬랙스', '라이더자켓', '없음', '따뜻함', '3_181012.jpg');
+
+//s2나비 겨울
+insert into CLOTHING_MATCH values(11, 1, '건조함',TO_DATE('20181203','YYYY-MM-DD'),'김포 장기동',3,'목폴라, 맨투맨', '스키니진', '무스탕', '없음', '낮에 추웠음', 
+'3_181203.jpg');
+insert into CLOTHING_MATCH values(10, 1, '건조함',TO_DATE('20181204','YYYY-MM-DD'),'김포 장기동',3,'히트텍, 남방', '면바지', '패딩', '없음', '낮에 추웠음', '3_181204.jpg');
+
+select * from CLOTHING_MATCH;
+
+
+
+
+/* ================================ test  예시 ===================================== */
 
 
 
@@ -176,58 +248,3 @@ insert into CLOTHING_MATCH values(5, 5, '눈', TO_CHAR(SYSDATE, 'YYYYMMDD'),
 insert into CLOTHING_MATCH values(0, 0, '비', TO_CHAR(SYSDATE, 'YYYYMMDD'),
 '서울시 마포구', 6, '니트', '히트텍', '야상', '핫팩',
 '너무 추웠어요', 'mm8.jpg');
-
-
-//회원 insert문 예시
-//insert into MEMBERT values(MEMBERT_SEQ.NEXTVAL,'서울 서대문구', 20, 'nnn@gmail.com', '나나', 'nana', '여', '더위를 잘 탐');
-//insert into MEMBERT values(MEMBERT_SEQ.NEXTVAL,'광주 광산구', 30, 'devil@gmail.com', '구구', '9toNine', '여', '추위를 잘 탐');
-//insert into MEMBERT values(MEMBERT_SEQ.NEXTVAL,'김포 장기동', 22, 'good@gmail.com', 's2나비', 'Btfly', '여', '보통');
-
-//나나 봄
-insert into CLOTHING_MATCH values(23, 3, '일교차 큼',TO_DATE('20180402','YYYY-MM-DD'),'서울 서대문구',1,'니트', '원피스', '가디건', '없음', '적당함',  '1_180402.jpg');
-insert into CLOTHING_MATCH values(24, 3, '따스함',TO_DATE('20180403','YYYY-MM-DD'),'서울 서대문구',1,'맨투맨', '청바지', '가디건', '없음', '약간 더웠음',  '1_180403.jpg');
-
-//나나 여름
-insert into CLOTHING_MATCH values(31, 2, '습함',TO_DATE('20180403','YYYY-MM-DD'),20180808,'서울 서대문구',1,'민소매', '반바지', '없음', '손풍기', '너무 더웠음', '1_180808.jpg');
-insert into CLOTHING_MATCH values(30, 3, '습함',TO_DATE('20180403','YYYY-MM-DD'),20180809,'서울 서대문구',1, '없음', '원피스', '없음', '손풍기', '약간 더웠음', '1_180809.jpg');
-
-//나나 가을
-insert into CLOTHING_MATCH values(21, 5, '일교차 큼',TO_DATE('20180403','YYYY-MM-DD'),20181011,'서울 서대문구',1,'맨투맨', '반바지', '청자켓', '없음', '낮에 약간 더움', '1_181011.jpg');
-insert into CLOTHING_MATCH values(20, 4, '건조함',TO_DATE('20180403','YYYY-MM-DD'),20181012,'서울 서대문구',1,'셔츠', '슬랙스', '가디건', '없음', '낮에 약간 더움', '1_181012.jpg');
-
-//나나 겨울
-insert into CLOTHING_MATCH values(11, 1, '건조함',TO_DATE('20180403','YYYY-MM-DD'),20181203,'서울 서대문구',1,'니트', '스키니진', '패딩', '없음', '낮에 추웠음', '1_181203.jpg');
-insert into CLOTHING_MATCH values(10, 1, '건조함',TO_DATE('20180403','YYYY-MM-DD'),20181204,'서울 서대문구',1,'니트', '스키니진', '패딩', '없음', '낮에 추웠음', '1_181204.jpg');
-
-//구구 봄
-insert into CLOTHING_MATCH values(23, 3, '일교차 큼',TO_DATE('20180403','YYYY-MM-DD'),20180402,'광주 광산구',2,'블라우스', '청바지', '가디건', '없음', '약간 더웠음',  '2_180402.jpg');
-insert into CLOTHING_MATCH values(25, 3, '따스함',TO_DATE('20180403','YYYY-MM-DD'),20180403,'광주 광산구',2,'없음', '원피스', '자켓', '없음', '적당함',  '2_180403.jpg');
--------------밑에부터 하기
-//구구 여름
-insert into CLOTHING_MATCH values(31, 1, '습함',TO_DATE('20180403','YYYY-MM-DD'),20180808,'광주 광산구',2,'반팔', '반바지', '없음', '손풍기', '땀이 많이 남', '2_180808.jpg');
-insert into CLOTHING_MATCH values(28, 3, '습함',TO_DATE('20180403','YYYY-MM-DD'),20180809,'광주 광산구',2, '반팔', '긴 치마', '없음', '손풍기', '비와서 괜찮았음', '2_180809.jpg');
-
-//구구 가을
-insert into CLOTHING_MATCH values(20, 3, '일교차 큼',TO_DATE('20180403','YYYY-MM-DD'),20181011,'광주 광산구',2,'니트', '슬랙스', '트렌치코트', '없음', '적당함', '2_181011.jpg');
-insert into CLOTHING_MATCH values(21, 3, '건조함',TO_DATE('20180403','YYYY-MM-DD'),20181012,'광주 광산구',2,'긴팔', '슬랙스', '가디건', '없음', '낮에 약간 더움', '2_181012.jpg');
-
-//구구 겨울
-insert into CLOTHING_MATCH values(11, 4, '바람이 세게 붊',TO_DATE('20181203','YYYY-MM-DD'),'광주 광산구',2,'니트', '니트치마', '롱패딩', '없음', '적당함', '2_181203.jpg');
-insert into CLOTHING_MATCH values(10, 1, '건조함',TO_DATE('20181204','YYYY-MM-DD'),'광주 광산구',2,'맨투맨', '트레이닝복', '숏패딩', '없음', '낮에 추웠음', '2_181204.jpg');
-
-//s2나비 봄
-insert into CLOTHING_MATCH values(21, 2, '일교차 큼',TO_DATE('20180402','YYYY-MM-DD'),'김포 장기동',3,'남방', '슬랙스', '자켓', '없음', '적당함',  '3_180402.jpg');
-insert into CLOTHING_MATCH values(22, 2, '따스함',TO_DATE('20180403','YYYY-MM-DD'),'김포 장기동',3,'긴팔, 조끼', '청바지', '가디건', '없음', '약간 더웠음',  '3_180403.jpg');
-
-//s2나비 여름
-insert into CLOTHING_MATCH values(31, 2, '습함',TO_DATE('20180808','YYYY-MM-DD'),'김포 장기동',3,'민소매', '반바지', '없음', '손풍기', '너무 더웠음', '3_180808.jpg');
-insert into CLOTHING_MATCH values(30, 3, '습함',TO_DATE('20180809','YYYY-MM-DD'),'김포 장기동',3, '반팔', '원피스', '없음', '손풍기', '괜히 겹쳐입음', '3_180809.jpg');
-
-//s2나비 가을
-insert into CLOTHING_MATCH values(21, 5, '일교차 큼',TO_DATE('20181011','YYYY-MM-DD'),'김포 장기동',3,'맨투맨', '반바지', '야상', '없음', '낮에 약간 더움', '3_181011.jpg');
-insert into CLOTHING_MATCH values(20, 4, '건조함',TO_DATE('20181012','YYYY-MM-DD'),'김포 장기동',3,'셔츠', '슬랙스', '라이더자켓', '없음', '따뜻함', '3_181012.jpg');
-
-//s2나비 겨울
-insert into CLOTHING_MATCH values(11, 1, '건조함',TO_DATE('20181203','YYYY-MM-DD'),'김포 장기동',3,'목폴라, 맨투맨', '스키니진', '무스탕', '없음', '낮에 추웠음', 
-'3_181203.jpg');
-insert into CLOTHING_MATCH values(10, 1, '건조함',TO_DATE('20181204','YYYY-MM-DD'),'김포 장기동',3,'히트텍, 남방', '면바지', '패딩', '없음', '낮에 추웠음', '3_181204.jpg');

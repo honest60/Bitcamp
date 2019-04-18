@@ -16,9 +16,8 @@ class SavePhotoDAO {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context)initContext.lookup("java:/comp/env");
-			ds = (DataSource)envContext.lookup("jdbc/myoracle");
-		}catch(NamingException ne) {
-		}		
+			ds = (DataSource)envContext.lookup("DB/itit");
+		}catch(NamingException ne) {ne.printStackTrace();}
 	}
 	
 	void insert(SavePhotoDTO dto) {				
@@ -42,6 +41,7 @@ class SavePhotoDAO {
 			pstmt.setString(11, dto.getPhotoName());
 			
 			pstmt.executeUpdate();
+			System.out.println("[ SQL insert sucess!! ]");
 		}catch(SQLException se) {
 			System.out.println("#insert"+se);
 		}finally {

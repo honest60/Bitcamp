@@ -17,11 +17,11 @@ public class LoginDAO {
 	LoginDAO(){
 		try {
 			Context initContext = new InitialContext();
-			Context envContext  = (Context)initContext.lookup("java:/comp/env");
-			ds = (DataSource)envContext.lookup("jdbc/myoracle");
-		}catch(NamingException ne) {
-		}
+			Context envContext = (Context)initContext.lookup("java:/comp/env");
+			ds = (DataSource)envContext.lookup("DB/itit");
+		}catch(NamingException ne) {ne.printStackTrace();}
 	}
+	
 	boolean check(HttpServletRequest request) {
 		ResultSet rs = null;
 		Connection con=null;
@@ -43,7 +43,7 @@ public class LoginDAO {
 					return true;
 				}else return false;
 			}else {
-				System.out.println("ºÒÀÏÄ¡");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½Ä¡");
 				return false;
 			}
 	    }catch(SQLException se) {
@@ -68,10 +68,10 @@ public class LoginDAO {
 			pstmt.setString(1,email);
 			rs = pstmt.executeQuery();	
 			if(rs.next()) {
-				System.out.println("Áßº¹µÈ ¾ÆÀÌµð");
+				System.out.println("ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½");
 				return false;
 			}else {
-				System.out.println("¾ÆÀÌµð Áßº¹¾ÈµÊ");
+				System.out.println("ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ßºï¿½ï¿½Èµï¿½");
 				return true;
 			}
 	    }catch(SQLException se) {

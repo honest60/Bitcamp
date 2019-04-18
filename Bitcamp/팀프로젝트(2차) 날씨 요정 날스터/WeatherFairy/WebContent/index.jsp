@@ -39,7 +39,8 @@
 
 					<!-- Default snippet for navigation -->
 					<div class="main-navigation">
-						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></button>
+						<button type="button" class="menu-toggle"><i class="fa fa-bars"></i></but
+						ton>
 						<ul class="menu">
 							<li class="menu-item current-menu-item"><a href="index.do">Home</a></li>
 							<c:choose>

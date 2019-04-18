@@ -16,7 +16,7 @@ class ReplyDAO {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context)initContext.lookup("java:/comp/env");
-			ds = (DataSource)envContext.lookup("jdbc/myoracle");
+			ds = (DataSource)envContext.lookup("DB/itit");
 		}catch(NamingException ne) {ne.printStackTrace();}
 	}
 	
@@ -29,23 +29,23 @@ class ReplyDAO {
 		String sql = "select COMMENTC, MEM_NUM from CHATBOARD where TDATE=? and REGION=? order by COMMENT_NUM";
 		try {
 			con = ds.getConnection();
-			System.out.println("dao connection ¹ÞÀ½");
+			System.out.println("dao connection ï¿½ï¿½ï¿½ï¿½");
 			pstmt = con.prepareStatement(sql);
 			String date = new SimpleDateFormat("yy-MM-dd").format(new Date());
 			pstmt.setString(1, date);
-			System.out.println("dao DEGREEC³ÖÀ½");
+			System.out.println("dao DEGREECï¿½ï¿½ï¿½ï¿½");
 			pstmt.setString(2, REG_NAME);
-			System.out.println("dao REG_NAME ³ÖÀ½");
+			System.out.println("dao REG_NAME ï¿½ï¿½ï¿½ï¿½");
 			rs = pstmt.executeQuery();
-			System.out.println("dao query½ÇÇàÇÔ");
+			System.out.println("dao queryï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			
 			while(rs.next()) {
-				System.out.println("dao rs next Á¸Àç");
+				System.out.println("dao rs next ï¿½ï¿½ï¿½ï¿½");
 				String COMMENTC = rs.getString("COMMENTC");
-				System.out.println("dao top °¡Á®¿È Á¸Àç");
+				System.out.println("dao top ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				MEM_NUM = rs.getString("MEM_NUM");
 				list.add(new ReplyDTO(COMMENTC, MEM_NUM));
-				System.out.println("dao list¿¡ ³ÖÀ½");
+				System.out.println("dao listï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			}
 			return list;
 		}catch (SQLException se) {
@@ -67,23 +67,23 @@ class ReplyDAO {
 		String sql = "insert into CHATBOARD values(COMMENT_NUM_SEQ.nextval, TO_CHAR(SYSDATE, 'YYMMDD'), ?, ?, ?)";
 		try {
 			con = ds.getConnection();
-			System.out.println("dao connection ¹ÞÀ½");
+			System.out.println("dao connection ï¿½ï¿½ï¿½ï¿½");
 			pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, REG_NAME);
 			pstmt.setString(2, story);
 			pstmt.setString(3, MEM_NUM);
-			System.out.println("dao REG_NAME ³ÖÀ½");
+			System.out.println("dao REG_NAME ï¿½ï¿½ï¿½ï¿½");
 			rs = pstmt.executeQuery();
-			System.out.println("dao query½ÇÇàÇÔ");
+			System.out.println("dao queryï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			
 			/*
 			while(rs.next()) {
-				System.out.println("dao rs next Á¸Àç");
+				System.out.println("dao rs next ï¿½ï¿½ï¿½ï¿½");
 				String COMMENTC = rs.getString("COMMENTC");
-				System.out.println("dao top °¡Á®¿È Á¸Àç");
+				System.out.println("dao top ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 				MEM_NUM = rs.getString("MEM_NUM");
 				list.add(new ReplyDTO(COMMENTC, MEM_NUM));
-				System.out.println("dao list¿¡ ³ÖÀ½");
+				System.out.println("dao listï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			}*/
 		}catch (SQLException se) {
 			se.printStackTrace();

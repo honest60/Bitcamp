@@ -269,7 +269,10 @@
 								</tr><br>                               
                                 <input type="button" value="저장하기" onclick="save()">
 							</div>
-                            </form>                           
+                            </form> 
+                            
+                            <!-- test 추가 -->
+                            <img src="<c:url value='/store/Tulips.jpg'/>" alt="original image" id="original-image" onclick="change()">                          
 						</div>
 					</div>
 				</div>
