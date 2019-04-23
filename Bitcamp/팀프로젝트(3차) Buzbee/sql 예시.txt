@@ -1,0 +1,152 @@
+/* 회원 테이블 */
+DROP TABLE memberT 
+	CASCADE CONSTRAINTS;
+
+/* 게시글 테이블 */
+DROP TABLE boardT 
+	CASCADE CONSTRAINTS;
+
+/* 파일 테이블 */
+DROP TABLE fileT 
+	CASCADE CONSTRAINTS;
+
+/* 회원 테이블 */
+CREATE TABLE memberT (
+	mem_num NUMBER NOT NULL, /* 회원번호 */
+	email VARCHAR2(60) NOT NULL, /* 이메일 */
+	nickname VARCHAR2(60) NOT NULL, /* 닉네임 */
+	pwd VARCHAR2(60) NOT NULL, /* 비밀번호 */
+	gender VARCHAR2(10) NOT NULL, /* 성별 */
+	phone NUMBER NOT NULL, /* 연락처 */
+	file_num NUMBER, /* 파일번호 */
+	file_name VARCHAR2(200) /* 프로필사진 */
+);
+
+
+CREATE UNIQUE INDEX PK_memberT
+	ON memberT (
+		mem_num ASC,
+		email ASC,
+		nickname ASC
+	);
+
+ALTER TABLE memberT
+	ADD
+		CONSTRAINT PK_memberT
+		PRIMARY KEY (
+			mem_num,
+			email,
+			nickname
+		);
+
+/* 게시글 테이블 */
+CREATE TABLE boardT (
+	mem_num NUMBER NOT NULL, /* 회원번호 */
+	email VARCHAR2(60) NOT NULL, /* 이메일 */
+	nickname VARCHAR2(60) NOT NULL, /* 닉네임 */
+	board_num NUMBER NOT NULL, /* 글번호 */
+	title VARCHAR2(100) NOT NULL, /* 제목 */
+	contents VARCHAR2(1000), /* 내용 */
+	file_num NUMBER, /* 파일번호 */
+	file_name VARCHAR2(200) /* 파일이름 */
+);
+
+COMMENT ON TABLE boardT IS '게시글 테이블';
+
+COMMENT ON COLUMN boardT.mem_num IS '회원번호';
+
+COMMENT ON COLUMN boardT.email IS '이메일';
+
+COMMENT ON COLUMN boardT.nickname IS '닉네임';
+
+COMMENT ON COLUMN boardT.board_num IS '글번호';
+
+COMMENT ON COLUMN boardT.title IS '제목';
+
+COMMENT ON COLUMN boardT.contents IS '내용';
+
+COMMENT ON COLUMN boardT.file_num IS '파일번호';
+
+COMMENT ON COLUMN boardT.file_name IS '파일이름';
+
+CREATE UNIQUE INDEX PK_boardT
+	ON boardT (
+		mem_num ASC,
+		email ASC,
+		nickname ASC,
+		board_num ASC
+	);
+
+ALTER TABLE boardT
+	ADD
+		CONSTRAINT PK_boardT
+		PRIMARY KEY (
+			mem_num,
+			email,
+			nickname,
+			board_num
+		);
+
+/* 파일 테이블 */
+CREATE TABLE fileT (
+	file_num NUMBER NOT NULL, /* 파일번호 */
+	file_name VARCHAR2(200) NOT NULL /* 파일이름 */
+);
+
+COMMENT ON TABLE fileT IS '파일 테이블';
+
+COMMENT ON COLUMN fileT.file_num IS '파일번호';
+
+COMMENT ON COLUMN fileT.file_name IS '파일이름';
+
+CREATE UNIQUE INDEX PK_fileT
+	ON fileT (
+		file_num ASC,
+		file_name ASC
+	);
+
+ALTER TABLE fileT
+	ADD
+		CONSTRAINT PK_fileT
+		PRIMARY KEY (
+			file_num,
+			file_name
+		);
+
+ALTER TABLE memberT
+	ADD
+		CONSTRAINT FK_fileT_TO_memberT
+		FOREIGN KEY (
+			file_num,
+			file_name
+		)
+		REFERENCES fileT (
+			file_num,
+			file_name
+		);
+
+ALTER TABLE boardT
+	ADD
+		CONSTRAINT FK_fileT_TO_boardT
+		FOREIGN KEY (
+			file_num,
+			file_name
+		)
+		REFERENCES fileT (
+			file_num,
+			file_name
+		);
+
+ALTER TABLE boardT
+	ADD
+		CONSTRAINT FK_memberT_TO_boardT
+		FOREIGN KEY (
+			mem_num,
+			email,
+			nickname
+		)
+		REFERENCES memberT (
+			mem_num,
+			email,
+			nickname
+		);
